@@ -1,0 +1,28 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Output directories (Don't commit generated videos/images)
+output_images/
+output_videos/
+tmp_pptx/
+audio/
+
+# Editor directories
+.idea/
+.vscode/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+venv/
+env/
+.env
+
+# Large Data files (Optional: keep structure but ignore large files)
+# data/audio/*.mp3
+# data/audio/*.wav
