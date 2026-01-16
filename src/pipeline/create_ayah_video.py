@@ -26,8 +26,9 @@ def create_ayah_video(
     # -------------------------------------------------
     # 0) Paths & constants
     # -------------------------------------------------
-    BASE_TEMPLATE_DIR = "/content/drive/MyDrive/QuranicAudios/QuranSlaids/QuranTemplates"
-    TEMPLATE_PATH = f"{BASE_TEMPLATE_DIR}/{frame_template}.pptx"
+    BASE_TEMPLATE_DIR = "/content/Mishkat/templates"
+    TEMPLATE_PATH = os.path.join(BASE_TEMPLATE_DIR, f"{frame_template}.pptx")
+
 
     TMP_PPTX_DIR = "/content/tmp_pptx"
     IMG_DIR = "/content/output_images"
