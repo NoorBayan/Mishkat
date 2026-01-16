@@ -1,12 +1,12 @@
 import os
 import requests
 
-# Internal module imports
 from ..utils.io import download_audio_from_gdrive
 from ..slide.renderer import render_quran_slide_from_template, pptx_to_png
 from ..video.image import image_and_audio_to_video
 from ..video.merge import merge_videos_with_transition
 from ..video.display import display_video_html
+
 
 def create_ayah_video(
     surah_name,
@@ -24,15 +24,24 @@ def create_ayah_video(
     """
 
     # -------------------------------------------------
-    # 0) Paths & constants
+    # 🔴 FIXED TEMPLATE PATH (GitHub, NOT Google Drive)
     # -------------------------------------------------
-    BASE_TEMPLATE_DIR = "/content/Mishkat/templates"
-    TEMPLATE_PATH = os.path.join(BASE_TEMPLATE_DIR, f"{frame_template}.pptx")
+    PROJECT_ROOT = "/content/Mishkat"
+    TEMPLATE_PATH = os.path.join(
+        PROJECT_ROOT,
+        "templates",
+        f"{frame_template}.pptx"
+    )
 
+    if not os.path.exists(TEMPLATE_PATH):
+        raise FileNotFoundError(f"❌ Template not found: {TEMPLATE_PATH}")
 
-    TMP_PPTX_DIR = "/content/tmp_pptx"
-    IMG_DIR = "/content/output_images"
-    VIDEO_DIR = "/content/output_videos"
+    # -------------------------------------------------
+    # Paths
+    # -------------------------------------------------
+    TMP_PPTX_DIR = "/content/outputs/tmp"
+    IMG_DIR = "/content/outputs/images"
+    VIDEO_DIR = "/content/outputs/videos"
     AUDIO_DIR = "/content/audio"
 
     os.makedirs(TMP_PPTX_DIR, exist_ok=True)
@@ -48,6 +57,7 @@ def create_ayah_video(
 
     # Arabic audio (direct URL)
     r = requests.get(audio_url)
+    r.raise_for_status()
     with open(arabic_audio_path, "wb") as f:
         f.write(r.content)
 
@@ -73,7 +83,7 @@ def create_ayah_video(
 
     pptx_to_png(arabic_pptx, IMG_DIR)
 
-    arabic_image = f"{IMG_DIR}/{os.path.splitext(os.path.basename(arabic_pptx))[0]}.png"
+    arabic_image = f"{IMG_DIR}/ayah_{verse_number}_ar.png"
 
     image_and_audio_to_video(
         image_path=arabic_image,
@@ -97,7 +107,7 @@ def create_ayah_video(
 
     pptx_to_png(translation_pptx, IMG_DIR)
 
-    translation_image = f"{IMG_DIR}/{os.path.splitext(os.path.basename(translation_pptx))[0]}.png"
+    translation_image = f"{IMG_DIR}/ayah_{verse_number}_tr.png"
 
     image_and_audio_to_video(
         image_path=translation_image,
@@ -106,7 +116,7 @@ def create_ayah_video(
     )
 
     # -------------------------------------------------
-    # 4) Merge videos with transition
+    # 4) Merge videos
     # -------------------------------------------------
     final_video = f"{VIDEO_DIR}/ayah_{verse_number}_final.mp4"
 
@@ -119,8 +129,5 @@ def create_ayah_video(
 
     display_video_html(final_video)
 
-    # -------------------------------------------------
-    # 5) Done
-    # -------------------------------------------------
     print("🎉 Ayah video created successfully")
     return final_video
