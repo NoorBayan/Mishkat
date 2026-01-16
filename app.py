@@ -1,26 +1,39 @@
 # =====================================
+# 0) FIX PYTHON PATH FOR STREAMLIT
+# =====================================
+import sys
+import os
+
+# Root of the project (folder containing app.py)
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Path to src folder
+SRC_DIR = os.path.join(ROOT_DIR, "src")
+
+# Add src to sys.path if not already there
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
+
+# =====================================
 # 1) IMPORTS
 # =====================================
 import streamlit as st
 import pandas as pd
 
-from src.pipeline.create_ayah_video import create_ayah_video
+# Import pipeline
+from pipeline.create_ayah_video import create_ayah_video
 
-from src.config.chapters import CHAPTERS_AR, CHAPTERS_EN
-from src.config.ayah_counts import AYAH_COUNTS
-from src.config.frames import QURAN_FRAME_TEMPLATES
-from src.config.translations import LANGUAGE_MAP, TRANSLATION_MAP
+# Import configs
+from config.chapters import CHAPTERS_AR, CHAPTERS_EN
+from config.ayah_counts import AYAH_COUNTS
+from config.frames import QURAN_FRAME_TEMPLATES
+from config.translations import LANGUAGE_MAP, TRANSLATION_MAP
 
-from src.data.loaders import (
-    load_ayahs,
-    load_translations,
-    load_reciters
-)
+# Import data loaders
+from data.loaders import load_ayahs, load_translations, load_reciters
 
-from src.data.accessors import (
-    get_ayah_text,
-    get_translation_data
-)
+# Import data accessors
+from data.accessors import get_ayah_text, get_translation_data
 
 # =====================================
 # 2) APP CONFIG (العنوان)
