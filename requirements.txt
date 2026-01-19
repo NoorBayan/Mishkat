@@ -1,15 +1,15 @@
-# Core
-streamlit>=1.30.0
+# Core libraries for the logic
 python-pptx>=0.6.21
 pandas>=1.3.0
 requests>=2.28.0
 tqdm>=4.64.0
+
+# For handling configuration files (yaml)
 PyYAML>=6.0
 
-# Media
-Pillow
-ffmpeg-python
-rarfile
+# For Jupyter/Colab Widgets
+ipywidgets>=7.7.0
+ipython>=8.0.0
 
 # Optional: libraries often needed for image/video handling alongside ffmpeg
 # Note: ffmpeg itself is a system tool, not a python package, 
