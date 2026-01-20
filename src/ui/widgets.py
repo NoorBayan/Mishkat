@@ -137,7 +137,8 @@ run_button.on_click(on_run_clicked)
 # Public API (THIS is what Colab calls)
 # ============================================================
 
-def launch_ui():
+
+def launch_ui(df_ayahs, df_translations, df_reciters):
     surah_dropdown.value = 1
     update_ayahs({"new": 1})
     language_dropdown.value = "en"
@@ -152,4 +153,3 @@ def launch_ui():
         run_button,
         output
     ]))
-
