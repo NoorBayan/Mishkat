@@ -1,165 +1,134 @@
-# 🕌 Mishkat
+# 🕌 Mishkat: Multisensory Quranic Rendering Engine
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Code Style](https://img.shields.io/badge/Code%20Style-Black-000000.svg)](https://github.com/psf/black)
-[![Status](https://img.shields.io/badge/Status-Active_Research-orange.svg)]()
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Dac3M-vgOyNE7-8iCkRsw_4mk3SSIySJ?usp=sharing)
+[![Status](https://img.shields.io/badge/Status-Proof_of_Concept-orange.svg)]()
 
-> **Mishkat** is an advanced content automation engine designed to generate professional Quranic videos programmatically. It bridges structured data with visual design by rendering dynamic PowerPoint templates into high-definition video sequences using FFmpeg.
-
----
-
-## 📖 Table of Contents
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [System Architecture](#-system-architecture)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Contributing](#-contributing)
-- [License](#-license)
+> **Mishkat** is the "Global Reach" arm of the **Bayan** ecosystem. It serves as a technical **Proof of Concept (PoC)** for transforming semantic understanding into **Context-Aware Audio** and visual experiences. It represents a pioneering model in **Disciplined Generative AI**, designed to bridge the emotional gap for non-Arabic speaking children.
 
 ---
 
-## 🔭 Overview
+## 📖 The Vision: Addressing the "Emotional Gap"
 
-Mishkat was built to solve the scalability issue in producing high-quality educational Quranic content. Instead of manually editing video frames, Mishkat treats video production as a **code-first pipeline**.
+### 1. The Motivation: Bridging the Language Barrier via Intuition
+Mishkat starts from a global civilizational challenge: *How do we connect a non-Arabic speaking child to the Quran before they master the language?*
 
-It utilizes a headless implementation of **LibreOffice** for high-fidelity rendering of `.pptx` slides and **FFmpeg** for complex media merging, allowing for the generation of thousands of verses in varying templates and languages with a single command.
+We believe the Quran is not merely text to be read, but an **Experience**. Mishkat aims to address the "auditory and visual intuition" of the child. Our goal is not just to teach recitation, but to build an **early emotional bond**, making the child feel the Quran is addressing them in their mother tongue, with a familiar tone, transforming linguistic alienation into emotional familiarity.
 
----
-
-## ✨ Key Features
-
-*   **⚡ Automated Pipeline:** Transform CSV data (Ayahs, Translations) into MP4 videos instantly.
-*   **🎨 Template-Driven Design:** Decouples logic from design. Designers work in PowerPoint (`.pptx`), and the engine populates content dynamically.
-*   **📐 Smart Layout Algorithm:** Features a custom heuristic (`estimate_font_size`) to dynamically adjust font sizes based on text density and bounding box constraints.
-*   **🌍 Multi-Language Support:** Native handling for Bi-directional text (RTL for Arabic/Urdu, LTR for English/Latin) with correct shaping.
-*   **🎬 Professional Rendering:** Seamless stitching of audio and visual assets with automated cross-fade transitions.
+### 2. The Technical Gap: Taming "Blind" Generative AI
+Despite the GenAI revolution, current applications suffer from "Cognitive Disconnect":
+*   **The Problem:** Current Text-to-Video and TTS tools act as "black boxes," isolated from the sanctity and context of the Quranic text, often producing random or spiritually inappropriate content.
+*   **The Challenge:** How do we tame these wild models to build a **Controlled Pipeline** that generates audio-visual content derived from a deep semantic understanding of the Ayah, rather than superficial generation?
 
 ---
 
-## 🏗 System Architecture
+## 🛠️ System Architecture & Innovation
 
-The project follows a clean **Separation of Concerns** architecture, ensuring the logic (`src`) is decoupled from assets (`templates`, `fonts`) and configuration.
+Mishkat introduces the first engineering framework for **Multisensory Quranic Rendering**.
+
+### 🧩 The Pipeline Components
+
+1.  **Emotional Voice Cloning (via Ilqa):**
+    We utilize our sister project, **[Ilqa](https://github.com/NoorBayan/Ilqa)**, to handle the audio generation pipeline.
+    *   **Innovation:** Developing TTS models that simulate a **"Child Persona"**.
+    *   **Impact:** Presenting Quranic translations in the child's native language (English, French, etc.) using a voice they identify with, creating immediate psychological resonance.
+
+2.  **Scalable Production Pipeline:**
+    To prove the infrastructure's robustness, we have moved beyond sampling. We have successfully automated the generation of over **140,000 video clips** covering full Qurans in **20 global languages** (out of 83 targeted). This demonstrates immediate **Global Scalability**.
+
+### 🏗️ Project Structure
+
+The project follows a strict Separation of Concerns architecture:
 
 ```text
 Mishkat/
 │
-├── config/             # YAML configurations (Non-code settings)
-│   ├── fonts.yaml      # Font mappings and fallback rules
-│   ├── paths.yaml      # Directory paths for I/O
-│   └── video.yaml      # FFmpeg encoding settings (bitrate, fps)
-│
-├── fonts/              # Local font repository
-│   ├── arabic/         # e.g., Amiri Quran
-│   └── latin/          # e.g., DejaVu Serif
-│
-├── data/               # Data ingestion layer
-│   ├── csv/            # Structured verses and metadata
-│   └── audio/          # Audio assets (git-ignored)
-│
-├── templates/          # Source design files
-│   └── QuranTemplate_BASE.pptx
-│
-├── src/                # Core Application Logic
-│   ├── utils/          # Helper modules (I/O, String manipulation)
-│   ├── slide/          # Slide rendering engine (PPTX manipulation)
-│   ├── video/          # Video encoding wrapper (FFmpeg)
-│   └── pipeline/       # High-level execution scripts
-│
-└── requirements.txt    # Python dependencies
+├── config/             # Configuration (Fonts, Paths, Video settings)
+├── fonts/              # Local typography assets (Arabic & Latin)
+├── data/               # Metadata, CSVs (Verses & Translations)
+├── templates/          # Dynamic PowerPoint (.pptx) templates
+├── src/                # Core Logic
+│   ├── utils/          # Helpers (Text processing, I/O)
+│   ├── slide/          # PPTX Renderer & Image conversion
+│   ├── video/          # FFmpeg wrappers & Transitions
+│   └── pipeline/       # Main orchestration scripts
+└── requirements.txt    # Dependencies
 ```
 
 ---
 
-## ⚙️ Prerequisites
+## 🎮 Interactive Demo & Usage
 
-Since Mishkat relies on system-level binaries for media processing, you must have the following installed:
+We provide a **Google Colab Notebook** as a prototype to demonstrate the generation capabilities.
 
-1.  **Python 3.8+**
-2.  **FFmpeg:** Required for video encoding and audio merging.
-    *   *Linux:* `sudo apt install ffmpeg`
-    *   *Mac:* `brew install ffmpeg`
-    *   *Windows:* Add ffmpeg to your System PATH.
-3.  **LibreOffice:** Required for headless conversion of slides to images.
-    *   *Linux:* `sudo apt install libreoffice`
+### [🚀 Launch Mishkat Demo in Colab](https://colab.research.google.com/drive/1Dac3M-vgOyNE7-8iCkRsw_4mk3SSIySJ?usp=sharing)
 
----
+#### 1. How to Use
+Select the Surah, Ayah, Reciter, Language, and Visual Template to generate a video instantly.
 
-## 📦 Installation
+![Notebook Usage Guide](docs/images/notebook_usage_guide.png)
+*(Figure 1: Step-by-step guide to generating a video using the Colab interface)*
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/mishkat.git
-    cd mishkat
-    ```
+#### 2. Visual Templates
+Mishkat supports dynamic visual themes (e.g., "Quran Garden", "Sky & Stars", "Flashcards") to suit different educational contexts.
 
-2.  **Create a virtual environment (Recommended):**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
-
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Install Fonts:**
-    Ensure the fonts located in `fonts/` are installed on your operating system to prevent rendering artifacts.
+![Templates Showcase](docs/images/templates_showcase.png)
+*(Figure 2: Examples of different visual templates generated by the engine)*
 
 ---
 
-## 🚀 Usage
+## ⚖️ Research Impact & Reliability
 
-Mishkat allows you to generate a video for a specific Ayah programmatically.
+Mishkat establishes a new standard for **AI for Faith-Based Education**:
 
-### Example: Generating a Single Verse Video
+*   **Meaning-Rendering Separation:** The system strictly separates *Authoritative Meaning* (approved translations) from *Sensory Rendering* (Audio/Video). The AI **never** generates the translation text itself; it only renders approved data.
+*   **Controlled Generative Pipeline:** All outputs undergo strict semantic constraints. The AI's role is limited to educational representation, not interpretation.
+*   **Precomputed Scalability:** Due to the high computational cost of emotional cloning and visual alignment, we adopted a pre-computation strategy, resulting in ~140,000 ready-to-stream assets.
+*   **PoC for Future Systems:** This pipeline serves as the foundation for future "Context-Aware Audio" systems capable of coloring audio performance based on meaning (Sadness, Glad Tidings, Warning) under human supervision.
 
-```python
-import sys
-import os
+---
 
-# Ensure src is in the python path
-sys.path.append(os.getcwd())
+## 🚀 Installation (Local Development)
 
-from src.pipeline import create_ayah_video
+To run the pipeline locally instead of on Colab:
 
-# Run the pipeline
-video_path = create_ayah_video(
-    surah_name="Al-Kawthar",
-    verse_number=1,
-    ayah_text="إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ",
-    translation_text="Indeed, We have granted you, [O Muhammad], al-Kawthar.",
-    # ... other parameters
-)
+```bash
+# 1. Clone the repository
+git clone https://github.com/YourOrg/Mishkat.git
+cd Mishkat
 
-print(f"Video generated at: {video_path}")
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Install system requirements (Linux/Ubuntu)
+sudo apt-get install libreoffice ffmpeg
+
+# 4. Run the pipeline (Example)
+python -m src.pipeline.create_ayah_video
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! We follow a standard GitHub flow:
+We welcome contributions, especially in expanding the `templates/` library or optimizing the FFmpeg rendering parameters.
 
-1.  **Fork** the repository.
-2.  Create a new **Branch** (`git checkout -b feature/NewTemplate`).
-3.  **Commit** your changes.
-4.  **Push** to the branch.
-5.  Open a **Pull Request**.
-
-Please ensure your code follows the existing structure and includes comments where necessary.
+1.  Fork the repository.
+2.  Create your feature branch (`git checkout -b feature/NewTemplate`).
+3.  Commit your changes.
+4.  Push to the branch.
+5.  Open a Pull Request.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <p align="center">
-  <i>Developed with ❤️ for the service of the Holy Quran.</i>
+  <strong>Mishkat</strong> part of the <strong>Bayan</strong> Ecosystem.<br>
+  <em>Bridging the gap between Sacred Text and Human Emotion.</em>
 </p>
